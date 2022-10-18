@@ -1,0 +1,26 @@
+{
+  "name": "aula_02",
+  "version": "0.0.1",
+  "description": "Meu primeiro app web com express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "watch": "nodemon --ext *",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tiago Silva",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mariadb": "^3.0.1",
+    "mysql2": "^2.3.3",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.25.2"
+  },
+  "devDependencies": {
+    "connect-livereload": "^0.6.1",
+    "livereload": "^0.9.3",
+    "nodemon": "^2.0.20"
+  }
+}
