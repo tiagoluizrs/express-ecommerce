@@ -1,5 +1,5 @@
-const { Sequelize } = require('sequelize');
 const Product = require('../models/Product');
+const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 
 class ProductController{
@@ -33,7 +33,11 @@ class ProductController{
       return result;
     }
 
-    filterProductByName(name){
+    async updateProduct(id, data){
+
+    }
+
+    async deleteProduct(id){
       
     }
 }
