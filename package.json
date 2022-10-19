@@ -11,6 +11,7 @@
   "author": "Tiago Silva",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mariadb": "^3.0.1",
     "mysql2": "^2.3.3",
