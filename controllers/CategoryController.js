@@ -1,45 +1,120 @@
 const Category = require("../models/Category");
 const { Sequelize } = require("sequelize");
+const GenericController = require("./GenericController");
 const Op = Sequelize.Op;
 
-class CategoryController {
- async  getCategories(params) {
-    let result;
-    const limit = parseInt(params.limit),
-          page = parseInt(params.page) - 1;
+class CategoryController extends GenericController{
+  constructor(){
+    super();
+  }
 
-    const paramsLimit = {
-      offset: page * limit,
-      limit: parseInt(limit),
-    };
+  async getCategories(params) {
+    try{
+      let result;
+      const pagination = this.generatePagination(params),
+            limit = pagination[0],
+            page = pagination[1];
 
-    if(params.q){
-      result = await Category.findAll({
-        where: {
-          name: {
-            [Op.like]: `%${params.q.toLowerCase()}%`,
+      const paramsLimit = {
+        offset: page * limit,
+        limit: parseInt(limit),
+      };
+      const order = this.generateOrder(params);
+
+      if (params.q) {
+        result = await Category.findAll({
+          where: {
+            name: {
+              [Op.like]: `%${params.q.toLowerCase()}%`,
+            },
           },
-        },
-        ...paramsLimit,
-      });
-    }else{
-      result = await Category.findAll(paramsLimit);
+          ...order,
+          ...paramsLimit,
+        });
+      } else {
+        result = await Category.findAll({
+          ...order,
+          ...paramsLimit
+        });
+      }
+      return {
+        status: 200,
+        result: result
+      };
+    } catch (err) {
+      return {
+        status: 500,
+        result: "Um erro genérico ocorreu, contate o administrador do sistema."
+      };
     }
-    
-    return result;
   }
 
   async getCategory(id) {
-    const result = await Category.findByPk(id);
-    return result;
+    try {
+      const result = await Category.findByPk(id);
+      return {
+        status: 200,
+        result: result
+      };
+    } catch (err) {
+      return {
+        status: 500,
+        result: "Um erro genérico ocorreu, contate o administrador do sistema.",
+      };
+    }
   }
 
-  async updateCategory(id, data){
-    return `Atualizando a categoria ${id}`;
+  async createCategory(data){
+    try{
+      const category = await Category.create(data);
+      return {
+        status: 200,
+        result: `Categoria ${category.id} criada com sucesso!!!`
+      };
+    }catch(err){
+      return {
+        status: 500,
+        result: 'Um erro genérico ocorreu, contate o administrador do sistema.'
+      }
+    }
   }
 
-  async deleteCategory(id){
-    return `Deletando a categoria ${id}`;
+  async updateCategory(id, data) {
+    try{
+      await Category.update(data, {
+        where: {
+          id: id
+        }
+      });
+      return {
+        status: 200,
+        result: `Categoria ${id} ataualizada com sucesso!`
+      };
+    }catch(err){
+      return {
+        status: 500,
+        result: 'Um erro genérico ocorreu, contate o administrador do sistema.'
+      }
+    }
+  }
+
+  async deleteCategory(id) {
+    try{
+      await Category.destroy({
+        where: {
+          id: id
+        }
+      });
+      return {
+        status: 200,
+        result: `Categoria ${id} deletada com sucesso!`,
+      };
+    }catch(err){
+      return {
+        status: 500,
+        result: 'Um erro genérico ocorreu, contate o administrador do sistema.'
+      }
+    }
   }
 }
 

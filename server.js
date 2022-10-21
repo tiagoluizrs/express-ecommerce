@@ -11,6 +11,8 @@ const auth = require("./routes/auth");
 const product = require("./routes/product"); 
 const category = require("./routes/category"); 
 
+app.use(express.json());
+
 app.use("/user", user);
 app.use("/auth", auth);
 app.use("/product", product);
