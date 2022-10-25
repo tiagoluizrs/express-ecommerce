@@ -5,7 +5,7 @@ class GenericController {
 
     return [limit, page];
   }
-  
+
   generateOrder(params) {
     let order = ["id", "ASC"];
     if (params.order) {
@@ -14,6 +14,10 @@ class GenericController {
     return {
       order: [order],
     };
+  }
+
+  generatePin(size=4) {
+    return Math.random().toString().substr(2, size);
   }
 }
 
