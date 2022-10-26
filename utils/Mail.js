@@ -26,8 +26,7 @@ class Mail {
       const result = await this.transporter.sendMail(data);
       return result;
     } catch (err) {
-      console.log(err);
-      return;
+      throw err;
     }
   }
 }

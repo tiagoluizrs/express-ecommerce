@@ -26,9 +26,14 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const result = await userCtrl.createUser(req.body);
+  res.statusCode = result.status;
   res.send(result.result);
 })
 
-
+router.post("/valida-email", async (req, res) => {
+  const result = await authCtrl.validateEmail(req.body.token);
+  res.statusCode = result.status;
+  res.send(result.result);
+});
 
 module.exports = router;
