@@ -8,20 +8,21 @@ const productCtrl = new ProductController();
 const jwt = new Jwt();
 
 router.get("/", async (req, res) => {
-  let result = jwt.verifyToken(req.headers.authorization);
-  if(result.status === 200){
-    result = await productCtrl.getProducts(req.query);
-  }
+  // let result = jwt.verifyToken(req.headers.authorization);
+  // if(result.status === 200){
+  result = await productCtrl.getProducts(req.query);
+  console.log(result);
 
+  // }
   res.statusCode = result.status;
   res.send(result.result);
 });
 
 router.get("/:id", async (req, res) => {
-  let result = jwt.verifyToken(req.headers.authorization);
-  if(result.status === 200){
+  // let result = jwt.verifyToken(req.headers.authorization);
+  // if(result.status === 200){
     result = await productCtrl.getProduct(req.params.id);
-  }
+  // }
   res.statusCode = result.status;
   res.send(result.result);
 });

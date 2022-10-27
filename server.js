@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors");
 
 const app = express();
 const db = require('./db.js');
@@ -12,6 +13,7 @@ const product = require("./routes/product");
 const category = require("./routes/category"); 
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/user", user);
 app.use("/auth", auth);

@@ -12,11 +12,19 @@ const Product = db.define("product", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   images: {
     type: DataTypes.STRING,
     allowNull: true,
   },
   price: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  promo_price: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },

@@ -130,10 +130,19 @@ class AuthController extends GenericController{
             name: user.name,
           });
 
+          const { email, username, name, id, role, active } = user;
           return {
             result: {
               msg: "Usuário logado com sucesso",
               token: token,
+              user: {
+                email,
+                username,
+                name,
+                id,
+                role,
+                active,
+              },
             },
             status: 200,
           };
