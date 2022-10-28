@@ -9,7 +9,7 @@ class Jwt {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: "1m",
+        expiresIn: "5m",
         algorithm: "HS256",
       }
     );

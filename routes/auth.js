@@ -6,6 +6,14 @@ const UserController = require("../controllers/UserController");
 authCtrl = new AuthController();
 userCtrl = new UserController();
 
+router.post("/valida-token", async (req, res) => {
+  let result = jwt.verifyToken(req.headers.authorization);
+
+  res.statusCode = result.status;
+  res.send(result.result);
+});
+
+
 router.post("/recovery", async (req, res) => {
   const result = await authCtrl.recoveryPassword(req.body.email);
   res.statusCode = result.status;

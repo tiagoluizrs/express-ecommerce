@@ -16,7 +16,7 @@ class AuthController extends GenericController{
   }
 
   async validateEmail(token){
-    let user = User.findOne({
+    let user = await User.findOne({
       where: {
         token: token,
       },
@@ -26,6 +26,7 @@ class AuthController extends GenericController{
       await User.update(
         {
           active: true,
+          token: null
         },
         {
           where: {
@@ -33,8 +34,20 @@ class AuthController extends GenericController{
           },
         }
       );
+
+      user = this.getUser(user);
+      let pin = this.jwt.generateToken({
+        email: user.email,
+        username: user.username,
+        name: user.name,
+      });
+
       return {
-        result: "Usuário validado com sucesso!",
+        result: {
+          msg: "Usuário validado com sucesso!",
+          user,
+          token: pin,
+        },
         status: 200,
       };
     }
@@ -110,7 +123,7 @@ class AuthController extends GenericController{
 
   async login(userEmail, password) {
     // TODO: Adicionar verificação de active no login
-    const user = await User.findOne({
+    let user = await User.findOne({
       where: {
         [Op.or]: {
           username: userEmail,
@@ -130,19 +143,12 @@ class AuthController extends GenericController{
             name: user.name,
           });
 
-          const { email, username, name, id, role, active } = user;
+          user = this.getUser(user);
           return {
             result: {
               msg: "Usuário logado com sucesso",
               token: token,
-              user: {
-                email,
-                username,
-                name,
-                id,
-                role,
-                active,
-              },
+              user,
             },
             status: 200,
           };

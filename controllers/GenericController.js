@@ -16,7 +16,12 @@ class GenericController {
     };
   }
 
-  generatePin(size=4) {
+  getUser(data) {
+    const { email, username, name, id, role, active } = data;
+    return { email, username, name, id, role, active };
+  }
+
+  generatePin(size = 4) {
     return Math.random().toString().substr(2, size);
   }
 }
